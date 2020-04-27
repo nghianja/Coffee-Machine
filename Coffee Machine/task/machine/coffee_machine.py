@@ -1,8 +1,5 @@
-# Write your code here
-print("Starting to make a coffee")
-print("Grinding coffee beans")
-print("Boiling water")
-print("Mixing boiled water with crushed coffee beans")
-print("Pouring coffee into the cup")
-print("Pouring some milk into the cup")
-print("Coffee is ready!")
+cups_of_coffee = int(input("Write how many cups of coffee you will need:"))
+print("For {} cups of coffee you will need:".format(cups_of_coffee))
+print("{} ml of water".format(cups_of_coffee * 200))
+print("{} ml of milk".format(cups_of_coffee * 50))
+print("{} g of coffee beans".format(cups_of_coffee * 15))
