@@ -1,4 +1,4 @@
-ml_of_water = 1200
+ml_of_water = 400
 ml_of_milk = 540
 grams_of_beans = 120
 disposable_cups = 9
@@ -14,13 +14,27 @@ def state():
     print("{} of money".format(money))
 
 
+def check(water_per_cup, milk_per_cup, beans_per_cup, cost_per_cup):
+    global ml_of_water
+    global ml_of_milk
+    global grams_of_beans
+    if ml_of_water < water_per_cup:
+        print("Sorry, not enough water!")
+    elif ml_of_milk < milk_per_cup:
+        print("Sorry, not enough milk!")
+    elif grams_of_beans < beans_per_cup:
+        print("Sorry, not enough coffee beans!")
+    else:
+        update(water_per_cup, milk_per_cup, beans_per_cup, cost_per_cup)
+
+
 def update(water_per_cup, milk_per_cup, beans_per_cup, cost_per_cup):
     global ml_of_water
     global ml_of_milk
     global grams_of_beans
     global money
     global disposable_cups
-
+    print("I have enough resources, making you a coffee!")
     ml_of_water -= water_per_cup
     ml_of_milk -= milk_per_cup
     grams_of_beans -= beans_per_cup
@@ -33,7 +47,7 @@ def expresso():
     milk_per_cup = 0
     beans_per_cup = 16
     cost_per_cup = 4
-    update(water_per_cup, milk_per_cup, beans_per_cup, cost_per_cup)
+    check(water_per_cup, milk_per_cup, beans_per_cup, cost_per_cup)
 
 
 def latte():
@@ -41,7 +55,7 @@ def latte():
     milk_per_cup = 75
     beans_per_cup = 20
     cost_per_cup = 7
-    update(water_per_cup, milk_per_cup, beans_per_cup, cost_per_cup)
+    check(water_per_cup, milk_per_cup, beans_per_cup, cost_per_cup)
 
 
 def cappuccino():
@@ -49,16 +63,16 @@ def cappuccino():
     milk_per_cup = 100
     beans_per_cup = 12
     cost_per_cup = 6
-    update(water_per_cup, milk_per_cup, beans_per_cup, cost_per_cup)
+    check(water_per_cup, milk_per_cup, beans_per_cup, cost_per_cup)
 
 
 def buy():
-    purchase = int(input("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino: "))
-    if purchase == 1:
+    purchase = input("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino, back - to main menu: ")
+    if purchase == "1":
         expresso()
-    elif purchase == 2:
+    elif purchase == "2":
         latte()
-    elif purchase == 3:
+    elif purchase == "3":
         cappuccino()
 
 
@@ -85,13 +99,15 @@ def take():
     money = 0
 
 
-state()
-print()
-action = input("Write action (buy, fill, take): ")
-if action == "buy":
-    buy()
-elif action == "fill":
-    fill()
-elif action == "take":
-    take()
-state()
+while True:
+    action = input("Write action (buy, fill, take, remaining, exit): ")
+    if action == "buy":
+        buy()
+    elif action == "fill":
+        fill()
+    elif action == "take":
+        take()
+    elif action == "remaining":
+        state()
+    else:
+        break
