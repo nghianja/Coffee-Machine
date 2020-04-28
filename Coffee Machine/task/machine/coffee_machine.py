@@ -1,26 +1,97 @@
-ml_of_water = int(input("Write how many ml of water the coffee machine has:"))
-ml_of_milk = int(input("Write how many ml of milk the coffee machine has:"))
-grams_of_beans = int(input("Write how many grams of coffee beans the coffee machine has:"))
-cups_of_coffee_needed = int(input("Write how many cups of coffee you will need:"))
+ml_of_water = 1200
+ml_of_milk = 540
+grams_of_beans = 120
+disposable_cups = 9
+money = 550
 
-water_per_cup = 200
-milk_per_cup = 50
-beans_per_cup = 15
 
-cups_of_coffee_made = 0
+def state():
+    print("The coffee machine has:")
+    print("{} of water".format(ml_of_water))
+    print("{} of milk".format(ml_of_milk))
+    print("{} of coffee beans".format(grams_of_beans))
+    print("{} of disposable cups".format(disposable_cups))
+    print("{} of money".format(money))
 
-while water_per_cup <= ml_of_water and \
-        milk_per_cup <= ml_of_milk and \
-        beans_per_cup <= grams_of_beans:
-    cups_of_coffee_made += 1
+
+def update(water_per_cup, milk_per_cup, beans_per_cup, cost_per_cup):
+    global ml_of_water
+    global ml_of_milk
+    global grams_of_beans
+    global money
+    global disposable_cups
+
     ml_of_water -= water_per_cup
     ml_of_milk -= milk_per_cup
     grams_of_beans -= beans_per_cup
+    money += cost_per_cup
+    disposable_cups -= 1
 
-if cups_of_coffee_made >= cups_of_coffee_needed:
-    message = "Yes, I can make that amount of coffee"
-    if cups_of_coffee_made > cups_of_coffee_needed:
-        message += " (and even {} more than that)".format(cups_of_coffee_made - cups_of_coffee_needed)
-    print(message)
-else:
-    print("No, I can make only {} cups of coffee".format(cups_of_coffee_made))
+
+def expresso():
+    water_per_cup = 250
+    milk_per_cup = 0
+    beans_per_cup = 16
+    cost_per_cup = 4
+    update(water_per_cup, milk_per_cup, beans_per_cup, cost_per_cup)
+
+
+def latte():
+    water_per_cup = 350
+    milk_per_cup = 75
+    beans_per_cup = 20
+    cost_per_cup = 7
+    update(water_per_cup, milk_per_cup, beans_per_cup, cost_per_cup)
+
+
+def cappuccino():
+    water_per_cup = 200
+    milk_per_cup = 100
+    beans_per_cup = 12
+    cost_per_cup = 6
+    update(water_per_cup, milk_per_cup, beans_per_cup, cost_per_cup)
+
+
+def buy():
+    purchase = int(input("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino: "))
+    if purchase == 1:
+        expresso()
+    elif purchase == 2:
+        latte()
+    elif purchase == 3:
+        cappuccino()
+
+
+def fill():
+    water_to_fill = int(input("Write how many ml of water do you want to add: "))
+    milk_to_fill = int(input("Write how many ml of milk do you want to add: "))
+    beans_to_fill = int(input("Write how many grams of coffee beans do you want to add: "))
+    cups_to_fill = int(input("Write how many disposable cups of coffee do you want to add: "))
+
+    global ml_of_water
+    global ml_of_milk
+    global grams_of_beans
+    global disposable_cups
+
+    ml_of_water += water_to_fill
+    ml_of_milk += milk_to_fill
+    grams_of_beans += beans_to_fill
+    disposable_cups += cups_to_fill
+
+
+def take():
+    global money
+    print("I gave you {}".format(money))
+    money = 0
+
+
+state()
+print()
+action = input("Write action (buy, fill, take): ")
+if action == "buy":
+    buy()
+elif action == "fill":
+    fill()
+elif action == "take":
+    take()
+state()
